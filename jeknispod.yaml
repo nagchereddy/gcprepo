@@ -1,0 +1,27 @@
+kind: Pod
+spec:
+  containers:
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:debug
+    imagePullPolicy: Always
+    command:
+    - sleep
+    args:
+    - 99d
+    volumeMounts:
+      - name: aws-secret
+        mounrPath: /root/.aws
+      - name: docker-registry-config
+        mounrPath: /kaniko/.docker   
+    resources:
+      limits:
+        memory: "1g"
+        cpu: "1"
+  volumes:
+    - name: aws-secret
+      secret:
+        secretName: aws-secret
+    - name: docker-registry-config
+      configMap:
+        name: docker-registry-config
+

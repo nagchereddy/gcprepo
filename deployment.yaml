@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: newapp
+spec:
+  selector:
+    matchLabels:
+      app: newapp
+  template:
+    metadata:
+      labels:
+        app: newapp
+    spec:
+      containers:
+      - name: myapp
+        image: httpd
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: web-vol
+          mountPath: /data/webvol
+      volumes:
+      - name: web-vol
+        persistentVolumeClaim:
+          claimName: webapp-storage
