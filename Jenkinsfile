@@ -14,11 +14,17 @@ pipeline{
             }
             
         }
-        stage("docker build"){
-            steps{
-                sh("docker build  -t ${GCR_URL}/${APP_NAME}:${env.BUILD_NUMBER} .")
-            }
-        }
+        stages{
+       stage('Building image & push') {
+      docker.withRegistry('${GCR_URL}', '${ARTIFACT_CREDS}') {
+
+        def customImage = docker.build("${GCR_URL}/${APP_NAME}:${env.BUILD_ID}")
+
+        /* Push the container to the custom Registry */
+        customImage.push()
+    }
+    }
+       
     }
     
 }
