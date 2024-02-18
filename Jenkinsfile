@@ -18,7 +18,7 @@ pipeline{
        stage('Building image & push') {
         steps{
             script {
-            docker.withRegistry('${GCR_URL}', 'jenkinsogcp') {
+            docker.withRegistry('${GCR_URL}', 'solid-antler-409714') {
 
             def customImage = docker.build("${GCR_URL}/${APP_NAME}:${env.BUILD_ID}")
 
