@@ -14,7 +14,7 @@ pipeline{
             }
             
         }
-        stages{
+        
        stage('Building image & push') {
       docker.withRegistry('${GCR_URL}', '${ARTIFACT_CREDS}') {
 
@@ -25,7 +25,7 @@ pipeline{
     }
     }
        
-    }
+    
     
 }
 }
