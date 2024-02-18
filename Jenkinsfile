@@ -16,7 +16,7 @@ pipeline{
         }
         stage("docker build"){
             steps{
-                sh("docker build  -t ${GCR_URL}/${APP_NAME} .")
+                sh("docker build  -t ${GCR_URL}/${APP_NAME}:${env.BUILD_NUMBER} .")
             }
         }
     }
