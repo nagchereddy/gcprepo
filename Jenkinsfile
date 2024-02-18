@@ -2,7 +2,7 @@ pipeline{
     agent any
     environment{
         REPO_CREDS = 'github'
-        // ARTIFACT_CREDS = 'jenkinsogcp'
+         ARTIFACT_CREDS = 'jenkinsogcp'
         GITHUB_NAME = 'gcprepo'
         GCR_URL = 'us-east1-docker.pkg.dev/solid-antler-409714/gcprepo'
         APP_NAME = 'httpd'
@@ -18,7 +18,7 @@ pipeline{
        stage('Building image & push') {
         steps{
             script {
-            docker.withRegistry('${GCR_URL}', 'solid-antler-409714') {
+            docker.withRegistry("${GCR_URL}", "${ARTIFACT_CREDS}") {
 
             def customImage = docker.build("${GCR_URL}/${APP_NAME}:${env.BUILD_ID}")
 
