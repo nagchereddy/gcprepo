@@ -19,14 +19,7 @@ pipeline{
             steps {
             withCredentials([file(credentialsId: 'jenkinsogcp', variable: 'ARTIFACT_CREDS')]) {
                sh("gcloud  auth activate-service-account --key-file=${ARTIFACT_CREDS}")
-            }
-            }
-        }
-        
-       stage('Building image & push') {
-        steps{
-            script {
-            docker.withRegistry("${GCR_URL}", "${ARTIFACT_CREDS}") {
+                docker.withRegistry("${GCR_URL}", "${ARTIFACT_CREDS}") {
 
             def customImage = docker.build("${GCR_URL}/${APP_NAME}:${env.BUILD_ID}")
 
@@ -34,8 +27,10 @@ pipeline{
             customImage.push()
         }
             }
+            }
         }
-    }
+        
+       
        
     
     
