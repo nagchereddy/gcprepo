@@ -2,7 +2,7 @@ pipeline{
     agent any
     environment{
         REPO_CREDS = 'github'
-        ARTIFACT_CREDS = credentials('jenkinsogcp')
+        ARTIFACT_CREDS = 'gcr:jenkinsogcp'
         GITHUB_NAME = 'gcprepo'
         GCR_URL = 'us-east1-docker.pkg.dev/solid-antler-409714/gcprepo'
         APP_NAME = 'httpd'
