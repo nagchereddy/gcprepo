@@ -17,6 +17,7 @@ pipeline{
         }
         stage("authenticating with GCP"){
             steps {
+                script{
             withCredentials([file(credentialsId: 'jenkinsogcp', variable: 'ARTIFACT_CREDS')]) {
                sh("gcloud  auth activate-service-account --key-file=${ARTIFACT_CREDS}")
                 docker.withRegistry("${GCR_URL}", "${ARTIFACT_CREDS}") {
@@ -26,6 +27,7 @@ pipeline{
             /* Push the container to the custom Registry */
             customImage.push()
         }
+            }
             }
             }
         }
