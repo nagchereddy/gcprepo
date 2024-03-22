@@ -15,8 +15,10 @@ pipeline{
             
         }
         stage("authenticating with GCP"){
+            steps {
             withCredentials([file(credentialsId: 'jenkinsogcp', variable: 'ARTIFACT_CREDS')]) {
                sh("gcloud  auth activate-service-account --key-file=${ARTIFACT_CREDS}")
+            }
             }
         }
         
