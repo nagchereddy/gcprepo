@@ -16,25 +16,27 @@ pipeline{
             
         }
         stage("authenticating with GCP"){
-            steps {
+            steps{
                 script{
                 withCredentials([file(credentialsId: 'jenkinsogcp', variable: 'ARTIFACT_CREDS')]) {
                         sh("gcloud  auth activate-service-account --key-file=${ARTIFACT_CREDS}")
-                    //     docker.withRegistry("${GCR_URL}", "gcr:${ARTIFACT_CREDS}") {
-
-                    //     def customImage = docker.build("${GCR_URL}/${APP_NAME}:${env.BUILD_ID}")
-
-                    //     /* Push the container to the custom Registry */
-                    //     customImage.push()
-                    // }
+                        
             }
             }
             }
         }
-        
-       
-       
-    
-    
+        stage("Building Docker image"){
+            steps{
+                script{
+                    docker.withRegistry("${GCR_URL}", "gcr:${ARTIFACT_CREDS}") {
+
+                        def customImage = docker.build("${GCR_URL}/${APP_NAME}:${env.BUILD_ID}")
+
+                        /* Push the container to the custom Registry */
+                        customImage.push()
+                    }
+                }
+            }
+        }
 }
 }
